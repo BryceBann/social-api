@@ -1,19 +1,20 @@
 const {thoughts, user} = require('../models');
 
 module.exports = {
-    getThoughts(req, res) {
-        thoughts.find()
+    getThought(req, res) {
+        thoughts.findAll()
         .then((thought) => res.json(thought))
         .catch((err) => res.status(500).json(err));
+        // return res.status(200).json({messgae: 'aye yo'})
     },
 
     getSingleThought(req, res) {
-        thoughts.findOne({_id: req.params.thoughtID})
+        thoughts.findOne({_id: req.params.thoughtId})
         .select('-__v')
         .then((thought) => 
         !thought
         ? res.status(404).json({message: 'No thoughts found with ID'})
-        : res.json(thoguht)
+        : res.json(thought)
         )
         .catch((err) => res.status(500).json(err));
     },
@@ -28,7 +29,7 @@ module.exports = {
     },
 
     deleteThought(req, res) {
-        thoughts.findOneAndDelete({_id: req.params.thoughtID})
+        thoughts.findOneAndDelete({_id: req.params.thoughtId})
         .then((thought) => 
         !thought
         ? res.status(404).json({message: 'No thought found with ID'})

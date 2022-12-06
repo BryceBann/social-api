@@ -10,7 +10,14 @@ const {
     deleteReaction
 } = require('../../controllers/thoughts-controller');
 
+const test = (req, res) => {
+    return req.status(200)
+
+}
+
 router.route('/').get(getThought).post(createThought);
+
+
 
 router.route('/:thoughtId')
 .get(getSingleThought)
@@ -18,9 +25,9 @@ router.route('/:thoughtId')
 .delete(deleteThought)
 
 router.route('/:thoughtId/reactions')
-.post(createReaction);
+// .post(createReaction);
 
 router.route('/:thoughtId/reactions/:reactionId')
-.delete(deleteReaction)
+// .delete(deleteReaction)
 
 module.exports = router;
