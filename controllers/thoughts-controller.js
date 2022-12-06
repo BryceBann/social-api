@@ -1,4 +1,4 @@
-const {thoughts, user} = require('../models');
+const {thoughts, user, thought} = require('../models');
 
 module.exports = {
     getThought(req, res) {
@@ -51,5 +51,20 @@ module.exports = {
         : res.json(thought)
         )
         .catch((err) => res.status(500).json(err))
+    },
+
+    deleteReaction(req, res) {
+        thoughts.findOneAndUpdate(
+            {_id: req.params.thoughtId},
+            {$pull: {reactions: {reactionId: req.params.reactionId}}},
+            {runValidators: true, new: true}
+        )
+        .then((thoughts) => 
+        !thought
+        ?res.status(404).json({message: "No thought found with ID"})
+        :res.json(thoughts)
+        )
+        .catch((err) => res.status(500).json(err));
+       
     }
 }
