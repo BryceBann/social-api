@@ -8,7 +8,7 @@ const userSchema = new Schema(
         unique: true,
         trim: true
     },
-    last : {
+    email : {
         type: String,
         require: true,
         unique: true,

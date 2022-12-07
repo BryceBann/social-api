@@ -10,13 +10,10 @@ module.exports = {
 
     getSingleUser(req, res) {
         user.findOne({_id: req.params.userId})
-        .populate('user')
-        .populate('friends')
-        .select('-__V')
         .then((user) => 
         !user
-        ?res.status(404).json({message: 'No user found with ID'})
-        :res,json(err)
+        ? res.status(404).json({message: 'No user found with ID'})
+        : res,json(user)
         )
         .catch((err) => res.status(500).json(err));
     },
@@ -35,13 +32,13 @@ module.exports = {
         .then((user) => 
         !user
         ? res.status(404).json({message: 'No user found with ID'})
-        : user.deleteMany({_id: {$in: user.thought} })
+        : thoughts.deleteMany({_id: {$in: user.thought} })
         )
         .then(() => res.json({message: 'User and thought deleted'}))
         .catch((err) => res.status(500).json(err));
     },
 
-    updateUser(rea, res) {
+    updateUser(req, res) {
         user.findOneAndUpdate(
             { _id: req.params.userId },
       { $set: req.body },
@@ -63,8 +60,8 @@ module.exports = {
         )
         .then((user) => 
         !user
-        ?res.status(404).json({message: 'No friend with ID'})
-        :res.json(user)
+        ? res.status(404).json({message: 'No friend with ID'})
+        : res.json(user)
         )
         .catch((err) => res.status(500).json(err));
     },
@@ -77,9 +74,9 @@ module.exports = {
         )
         .then((user) => 
         !user
-        ?res.status(404).json({message: 'No friend with ID'})
-        :res.json(user)
+        ? res.status(404).json({message: 'No friend with ID'})
+        : res.json(user)
         )
-        .catch((err) => res,status(500).json(err));
+        .catch((err) => res.status(500).json(err));
     },
 };
