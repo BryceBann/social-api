@@ -5,7 +5,6 @@ module.exports = {
         thoughts.findAll()
         .then((thought) => res.json(thought))
         .catch((err) => res.status(500).json(err));
-        // return res.status(200).json({messgae: 'aye yo'})
     },
 
     getSingleThought(req, res) {
