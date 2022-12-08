@@ -4,24 +4,24 @@ const { user, thought } = require("../models");
 module.exports = {
     getUser(req, res) {
         user.find()
-        .then((user) => res.json(user))
+        .then((userData) => res.json(userData))
         .catch((err) => res.status(500).json(err));
     },
 
     getSingleUser(req, res) {
         user.findOne({_id: req.params.userId})
         .populate("thoughts")
-        .then((user) => 
-        !user
+        .then((userData) => 
+        !userData
         ? res.status(404).json({message: 'No user found with ID'})
-        : res.json(user)
+        : res.json(userData)
         )
         .catch((err) => res.status(500).json(err));
     },
 
     createUser(req, res) {
         user.create(req.body)
-        .then((user) => res.json(user))
+        .then((userData) => res.json(userData))
         .catch((err) => {
             console.log(err);
             return res.status(500).json(err);
